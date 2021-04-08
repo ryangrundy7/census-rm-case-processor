@@ -38,6 +38,11 @@ jobs:
         echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
     - name: Run tests
       run: mvn verify jacoco:report
+    - name: Run Docker images
+      run: docker images
     - name: Docker build image
       if: github.ref == 'refs/heads/master'
-      run: echo "This should build the docker image"
+      run: docker build -t eu.gcr.io/census-rm-ryangrundy/rm/census-rm-case-processor:new_image .
+    - name: Docker push image
+      if: github.ref == 'refs/heads/master'
+      run: docker push eu.gcr.io/census-rm-ryangrundy/rm/census-rm-case-processor:new_image .
