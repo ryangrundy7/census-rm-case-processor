@@ -1,9 +1,6 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: Java CI with Maven
 
 on:
@@ -33,6 +30,8 @@ jobs:
           ${{ runner.os }}-maven-
     - name: Run fmt
       run: mvn fmt:check
+    - name: docker login
+      run: echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
     - name: Run tests
       run: echo "This should run the tests"
     - name: Docker build image
