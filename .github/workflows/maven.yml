@@ -31,7 +31,8 @@ jobs:
     - name: Run fmt
       run: mvn fmt:check
     - name: docker login
-      run: echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
+      run: |
+        echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
     - name: Run tests
       run: echo "This should run the tests"
     - name: Docker build image
