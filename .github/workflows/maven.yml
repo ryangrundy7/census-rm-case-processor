@@ -42,7 +42,7 @@ jobs:
       run: docker images
     - name: Docker tag image
       if: github.ref == 'refs/heads/master'
-      run: docker tag -t ${{ secrets.GCR_LOCATION }} ${{ env.IMAGE_NAME }}:new_image
+      run: docker tag ${{ secrets.GCR_LOCATION }} ${{ env.IMAGE_NAME }}:new_image
     - name: Docker push image
       if: github.ref == 'refs/heads/master'
       run: docker push ${{ env.IMAGE_NAME }}:new_image 
