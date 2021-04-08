@@ -25,13 +25,13 @@ services:
 
   pubsub-emulator:
     container_name: pubsub-emulator-case-it
-    image: eu.gcr.io/census-rm-ci/rm/gcloud-pubsub-emulator:latest
+    image: eu.gcr.io/census-rm-ryangrundy/rm/gcloud-pubsub-emulator:latest
     ports:
       - "18538:8538"
 
   uac-qid:
     container_name: uac-qid-case-it
-    image: eu.gcr.io/census-rm-ci/rm/census-rm-uac-qid-service:latest
+    image: eu.gcr.io/census-rm-ryangrundy/rm/census-rm-uac-qid-service:latest
     ports:
       - "18164:8164"
     external_links:
