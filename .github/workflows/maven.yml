@@ -8,6 +8,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    
+env:
+  IMAGE_NAME: ${{ secrets.DOCKER_GCP_LOCATION }}/case-processor
 jobs:
   build:
 
@@ -34,7 +37,7 @@ jobs:
       run: |
         echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
     - name: Run tests
-      run: echo "This should run the tests"
+      run: mvn verify jacoco:report
     - name: Docker build image
       if: github.ref == 'refs/heads/master'
       run: echo "This should build the docker image"
