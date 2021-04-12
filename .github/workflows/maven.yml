@@ -46,4 +46,4 @@ jobs:
       - name: CD hook
         run: |
           gcloud pubsub topics publish projects/census-rm-ryangrundy/topics/deploy-code --project ${{ secrets.PROJECT_ID }} \
-          --message "{ \"repo\": \"case-processor\", \"kind\": \"deployment\" }"
+          --message "{ \"repo\": \"case-processor\" }"
