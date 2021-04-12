@@ -45,5 +45,5 @@ jobs:
           export_default_credentials: true
       - name: CD hook
         run: |
-          gcloud pubsub topics publish projects/census-rm-ryangrundy/topics/gcr --project ${{ secrets.PROJECT_ID }} \
-          --message "{ \"Test\": \"Testing if this will work\" }"
+          gcloud pubsub topics publish projects/census-rm-ryangrundy/topics/deploy-code --project ${{ secrets.PROJECT_ID }} \
+          --message "{ \"repo\": \"case-processor\", \"kind\": \"deployment\" }"
