@@ -11,6 +11,13 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  GKE_CLUSTER:  ${{ secrets.CLUSTER_NAME }}  # Add your cluster name here.
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}   # Add your cluster zone here.
+  DEPLOYMENT_NAME: case-processor # Add your deployment name here.
+  IMAGE: census-rm-case-processor
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   comment:
@@ -20,3 +27,24 @@ jobs:
       - name: Build
         run: |
           echo ${{ github.event.comment.body }}
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.SA_KEY }}
+          export_default_credentials: true
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: |-
+          gcloud --quiet auth configure-docker
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - uses: google-github-actions/get-gke-credentials@v0.2.1
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GKE_SA_KEY }}
+
+      # Build the Docker image
+      - name: Testing pods connection
+        run: |-
+            kubectl get pods
