@@ -1,6 +1,5 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: Java CI with Maven
 
 on:
@@ -41,7 +40,7 @@ jobs:
       run: docker images
     - name: Docker tag image
       if: github.ref == 'refs/heads/master'
-      run: docker tag ${{ secrets.GCR_LOCATION }} ${{ env.IMAGE_NAME }}:new_image
+      run: docker tag ${{ secrets.GCR_LOCATION }} ${{ env.IMAGE_NAME }}:testing_image
     - name: Docker push image
       if: github.ref == 'refs/heads/master'
-      run: docker push ${{ env.IMAGE_NAME }}:new_image 
+      run: docker push ${{ env.IMAGE_NAME }}:testing_image
